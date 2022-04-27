@@ -70,12 +70,21 @@ app.get('/pokemon/:name', (req, res) => {
 app.delete('/:id', (req, res) => {
 
 
-  con.query("DELETE * from cards WHERE id = ?", [req.params.id] ,(error, rows) => {
+  con.query("DELETE from cards WHERE id = ?", [req.params.id] ,(error, rows) => {
+  
+
     if (!error) {
-    res.send(`Cards with the record Id: ${[req.params.id]} has been removed.`);
+
+    console.log(`borrada la carta numero ${[req.params.id]}`)
+    res.status(204).send(`Cards with the record Id: ${[req.params.id]} has been removed.`);
+
+    }else
+     {
+
+      console.log(error);
     }
 
-    console.log(error);
+    
   });
     
 })
