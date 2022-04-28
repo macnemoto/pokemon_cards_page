@@ -8,7 +8,9 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(bodyParser.json())
 
-
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})  
 
 
 app.post("/cards", function (req, res) {
@@ -89,9 +91,34 @@ app.delete('/:id', (req, res) => {
     
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})  
+// add new record in the database
+app.post('', (req, res) => {
+  // Query to insert multiple rows
+  let query = `INSERT INTO cards 
+  (name, img) VALUES ?;`;
+
+  const params = req.body;
+
+
+  con.query("INSERT INTO cards (name, img) VALUES ?;", [params] ,(error, rows)   => {
+  
+
+    if (!error) {
+
+    console.log(`borrada la carta numero ${params}`)
+    res.send(`Cards with the record Id: ${params.name} has been removed.`);
+
+    }else{
+      console.log(error);
+    }
+
+    
+  });
+    
+})
+
+
+
 
 //result[2].img `<br>` + result[2].name
 
